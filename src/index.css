@@ -1,0 +1,72 @@
+@import "tailwindcss";
+body {
+  @apply min-h-screen;
+  background: linear-gradient(90deg, #ede0d4 0%, #f5c7d9 50%, #e6d5f5 100%);
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* giúp body cao tối thiểu = màn hình */
+  min-width: 100vw;  /* giúp body rộng tối thiểu = màn hình */
+  box-sizing: border-box; /* tính padding vào kích thước tổng */
+  padding: 16px; /* hoặc dùng Tailwind p-4 */
+}
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  /* padding: 0; */
+}
+* {
+  box-sizing: border-box;
+}
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.8s ease-out forwards;
+}
+
+.animate-slide-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.animate-slide-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+/* Ẩn ban đầu */
+.opacity-0 {
+  opacity: 0;
+}

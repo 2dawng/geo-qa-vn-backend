@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Typewriter Welcome</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .typewriter {
+      overflow: hidden; /* Ẩn phần chưa gõ */
+      border-right: 3px solid #3b82f6; /* Con trỏ nháy */
+      white-space: nowrap; /* Giữ chữ trên 1 dòng */
+      font-family: 'Courier New', monospace; /* Font gõ máy */
+      font-size: 3.5rem;
+      font-weight: bold;
+      color: #1e40af;
+      animation: 
+        typing 2.5s steps(7, end) forwards,
+        blink 0.75s step-end infinite;
+    }
+
+    /* Gõ từng chữ */
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 7ch; } /* 7 ký tự = "Welcome" */
+    }
+
+    /* Con trỏ nháy */
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #3b82f6; }
+    }
+
+    /* Tùy chọn: nền nhẹ + hiệu ứng hoàn thành */
+    .typewriter::after {
+      content: '';
+      display: inline-block;
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-r from-blue-50 to-indigo-100 flex items-center justify-center min-h-screen">
+  <div class="text-center">
+    <h1 class="typewriter inline-block">Welcome</h1>
+  </div>
+</body>
+</html>

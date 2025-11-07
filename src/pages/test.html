@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrafficBot - AI Luật Giao Thông</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #FFD60A;
+            --primary-green: #34C759;
+            --primary-blue: #007AFF;
+            --bg-gradient: linear-gradient(135deg, #FFF5D6 0%, #FFEAA7 50%, #FFD93D 100%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-dark: #1C1C1E;
+            --text-light: #555;
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.7);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--primary-green);
+            animation: pulse 2s infinite;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .lang-btn {
+            background: #1C1C1E;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .try-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 214, 10, 0.3);
+        }
+
+        .try-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 214, 10, 0.4);
+        }
+
+        /* Main Content */
+        .main {
+            display: flex;
+            padding: 40px;
+            gap: 40px;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .map-section {
+            flex: 1;
+            background: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover;
+            border-radius: 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            min-height: 500px;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,245,214,0.9) 0%, rgba(255,217,61,0.7) 100%);
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .slogan {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-align: center;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .location-pin {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            color: var(--primary-blue);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Auth Section */
+        .auth-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .welcome-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .robot {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .robot i {
+            font-size: 2.5rem;
+            color: var(--primary-green);
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .welcome-text {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            text-align: center;
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        .get-started {
+            font-weight: 600;
+            margin: 20px 0;
+            font-size: 1.2rem;
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 32px;
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-login {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-signup {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 20px 0;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ddd;
+            z-index: 0;
+        }
+
+        .divider span {
+            background: var(--card-bg);
+            padding: 0 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px;
+            margin: 10px 0;
+            background: white;
+            border: 1.5px solid #eee;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .social-btn:hover {
+            border-color: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .social-btn i {
+            font-size: 1.3rem;
+        }
+
+        .google-icon {
+            width: 20px;
+            height: 20px;
+            background: url('https://www.google.com/favicon.ico') center/contain no-repeat;
+        }
+
+        .privacy {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .map-section, .auth-section {
+                flex: none;
+                width: 100%;
+            }
+            .map-section {
+                min-height: 400px;
+            }
+            .slogan {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 20px;
+            }
+            .logo {
+                font-size: 1.3rem;
+            }
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            .auth-buttons {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-car-side"></i>
+            TrafficBot
+        </div>
+        <div class="header-right">
+            <button class="lang-btn">
+                <i class="fas fa-globe"></i> VI
+            </button>
+            <button class="try-btn">Dùng thử TrafficBot</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Map Section -->
+        <div class="map-section">
+            <div class="map-overlay">
+                <div class="slogan">
+                    Lái xe thông minh,<br>
+                    An toàn hơn bao giờ hết
+                </div>
+            </div>
+            <i class="fas fa-map-marker-alt location-pin"></i>
+        </div>
+
+        <!-- Auth Section -->
+        <div class="auth-section">
+            <div class="welcome-header">
+                <div class="robot">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h1 class="welcome-title">WELCOME</h1>
+            </div>
+            
+            <p class="welcome-text">
+                "Trợ lý AI TrafficBot sẽ giúp bạn tra cứu luật giao thông mới nhất và chính xác nhất."
+            </p>
+
+            <p class="get-started">Đăng nhập hoặc đăng ký để bắt đầu</p>
+
+            <div class="auth-card">
+                <div class="auth-buttons">
+                    <button class="btn btn-login">
+                        <i class="fas fa-sign-in-alt"></i> ĐĂNG NHẬP
+                    </button>
+                    <button class="btn btn-signup">
+                        <i class="fas fa-user-plus"></i> ĐĂNG KÝ
+                    </button>
+                </div>
+
+                <div class="divider"><span>hoặc</span></div>
+
+                <button class="social-btn">
+                    <div class="google-icon"></div>
+                    Tiếp tục với Google
+                </button>
+
+                <button class="social-btn">
+                    <i class="fas fa-phone"></i>
+                    Tiếp tục với Số điện thoại
+                </button>
+
+                <p class="privacy">
+                    Bằng việc tiếp tục, bạn đồng ý với <strong>Chính sách bảo mật</strong> của TrafficBot.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
