@@ -86,10 +86,10 @@ export default function ChatPage() {
 
   return (
     <>
-      <div className="px-4 py-4 h-full">
-        <div className="flex h-full gap-3">
+      <div className="h-full">
+        <div className="flex h-full gap-3 px-4 py-4">
           {/* Sidebar */}
-          <aside className={`${sidebarOpen ? 'w-80' : 'w-0 lg:w-20'} transition-all duration-300 bg-white/5 backdrop-blur-xl overflow-hidden flex flex-col rounded-4xl`}>
+          <aside className={`${sidebarOpen ? 'w-80' : 'w-0 lg:w-20'} transition-all duration-300 bg-white/5 backdrop-blur-xl overflow-hidden flex flex-col rounded-4xl overflow-y-scroll`}>
 
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-center justify-between">
@@ -202,7 +202,7 @@ export default function ChatPage() {
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 flex flex-col chat-area rounded-4xl items-center justify-center bg-white/5 backdrop-blur-xl px-4 py-4">
+          <main className="flex-1 flex flex-col main-chat rounded-4xl items-center justify-center bg-white/5 backdrop-blur-xl px-4 py-4">
             {/* Header */}
             <header className="px-8 py-4 mt-auto">
               <div className="flex items-center justify-center">
@@ -211,7 +211,7 @@ export default function ChatPage() {
                     <img className='w-full h-full absolute object-center' src={RobotLogo} alt="" />
                   </div>
                   <div className="text-center">
-                    <h1 className="text-2xl font-bold text-gray-900">Chào mừng đến với Luật GT AI</h1>
+                    <h1 className="text-2xl font-bold text-gray-900">Chào mừng đến với TrafficBot</h1>
                     <p className="text-sm text-gray-600">Trợ lý AI chuyên về luật giao thông Việt Nam</p>
                   </div>
                 </div>
@@ -219,42 +219,28 @@ export default function ChatPage() {
             </header>
 
             {/* Features Grid */}
-            <div className="p-8 overflow-y-auto mt-auto">
+            <div className="p-8 overflow-y-auto mt-auto chat-area">
               <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
                   {features.map((feature, idx) => (
                     <button
                       key={idx}
-                      className="bg-white/70 backdrop-blur-xl rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition-all hover:shadow-lg hover:-translate-y-1"
+                      className="flex flex-col items-start bg-white/70 backdrop-blur-xl rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition-all hover:shadow-lg hover:-translate-y-1"
                     >
                       <div className={`w-12 h-12 bg-gradient-to-br ${feature.color} rounded-xl flex items-center justify-center text-white mb-4`}>
                         {feature.icon}
                       </div>
                       <h3 className="font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                      <p className="text-sm text-gray-600">{feature.description}</p>
+                      <p className="text-sm text-gray-600 text-start">{feature.description}</p>
                     </button>
                   ))}
                 </div>
 
-                {/* Upgrade Banner */}
-                <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-4 mb-8 text-white">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Crown className="w-8 h-8" />
-                      <div>
-                        <h3 className="text-sm font-semibold">Nâng cấp lên Pro để sử dụng không giới hạn</h3>
-                        <p className="text-sm opacity-90">Mở khóa tất cả tính năng AI cao cấp</p>
-                      </div>
-                    </div>
-                    <button className="bg-white text-purple-600 px-6 py-2 rounded-full font-medium hover:bg-gray-100 transition-all">
-                      Nâng cấp ngay
-                    </button>
-                  </div>
-                </div>
+        
 
                 {/* Chat Input */}
                 <div className="max-w-4xl mx-auto">
-                  <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-gray-200">
+                  <div className="bg-white/50 backdrop-blur-xl rounded-2xl p-4 shadow-xl border border-gray-200">
                     <div className="text-center mb-4">
                       <p className="text-gray-700 font-medium">Luật GT AI có thể giúp gì cho bạn hôm nay?</p>
                     </div>
@@ -278,16 +264,6 @@ export default function ChatPage() {
                     </div>
 
                     <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center gap-4 text-gray-600">
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-xs font-semibold">
-                            GPT
-                          </div>
-                          <span>GPT-4o</span>
-                        </div>
-                        <span className="text-gray-400">•</span>
-                        <span>11233/25000</span>
-                      </div>
                       <button className="text-gray-500 hover:text-gray-700 flex items-center gap-2">
                         <Sparkles className="w-4 h-4" />
                         Gợi ý câu hỏi
