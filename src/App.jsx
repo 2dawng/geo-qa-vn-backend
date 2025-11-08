@@ -2,6 +2,8 @@
 import './App.css'
 import AppRoutes from './routes/AppRoutes'
 import ChatPage from './pages/ChatPage'
+import ChatBox from './pages/ChatBox'
+import Button from './components/ui/ChatInput'
 
 function App() {
 
@@ -9,6 +11,8 @@ function App() {
     <>
       {/* <AppRoutes /> */}
       <ChatPage />
+      {/* <ChatBox /> */}
+      {/* <Button /> */}
     </>
   )
 }
